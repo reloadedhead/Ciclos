@@ -17,7 +17,7 @@ public class SAXParserDemo {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             SAXParser saxParser = factory.newSAXParser();
-            //Sepator test
+            //Sepator tests
             File inputFile = new File("."+File.separator+"dependencias"+File.separator+"hibernate-core-4.2.0.Final.odem");
             UserHandler userhandler = new UserHandler();
             saxParser.parse(inputFile, userhandler);
