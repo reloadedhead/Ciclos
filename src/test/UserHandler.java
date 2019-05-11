@@ -10,6 +10,7 @@ public class UserHandler extends DefaultHandler {
     boolean bLastName = false;
     boolean bNickName = false;
     boolean bMarks = false;
+    static boolean flagCarga = false;
 
     @Override
     public void startElement(String uri,
@@ -17,13 +18,16 @@ public class UserHandler extends DefaultHandler {
 
         if (qName.equalsIgnoreCase("namespace")) {
             String packageName = attributes.getValue("name");
-            System.out.println("Package name : " + packageName);
-        } else if (qName.equalsIgnoreCase("type")) {
-            String typeName = attributes.getValue("classification");
-            System.out.println("Type name "+ typeName);
+            SAXParserDemo.cantpak++;
+            if (!(flagCarga)){
+                SAXParserDemo.newPacket(packageName);
+            }
+        } else if (qName.equalsIgnoreCase("depends-on")) {
+            String packageDep = attributes.getValue("name");
+            if ((flagCarga)&&(!packageDep.contains("java"))){
+                SAXParserDemo.fillMatriz(packageDep);
+            }
         }
-//		} else if (qName.equalsIgnoreCase("lastname")) {
-//			bLastName = true;
 //		} else if (qName.equalsIgnoreCase("nickname")) {
 //			bNickName = true;
 //		}
@@ -35,8 +39,9 @@ public class UserHandler extends DefaultHandler {
     @Override
     public void endElement(String uri,
                            String localName, String qName) throws SAXException {
-        if (qName.equalsIgnoreCase("namespace"))
-            System.out.println("End Element :" + qName);
+        if (qName.equalsIgnoreCase("namespace")){
+            //System.out.println("End Element :" + qName);
+        }
         else if (qName.equalsIgnoreCase("type"))
             bType = false;
 //		else if (qName.equalsIgnoreCase("lastname"))
