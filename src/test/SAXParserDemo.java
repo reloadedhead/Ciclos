@@ -5,31 +5,48 @@ import java.util.HashMap;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+/**
+ * Clase de SAXParser. Se encarga de levantar el XML. Por ahrora levanta solo uno, indicado en el path del metodo main.
+ */
 public class SAXParserDemo {
-
-    //Contador de numero total de paquetes, usado para crear matriz y como fila actual
+    /**
+     * Contador de numero total de paquetes, usado para crear matriz y como fila actual
+     */
     static int cantpak=0;
 
-    //Matriz que contendra true si el paquete fila depende del paquete columna
-    static boolean [][] depMatriz;
+    /**
+     * Matriz que contendra true si el paquete fila depende del paquete columna
+     */
+    private static boolean [][] depMatriz;
 
-    //Referencias en la matriz
-    static HashMap<String,Integer> referencia;
-    static HashMap<Integer,String> InvReferencia;
+    /**
+     * Referencias en la matriz.
+     */
+    private static HashMap<String,Integer> referencia = new HashMap<String, Integer>();
+    private static HashMap<Integer,String> InvReferencia = new HashMap<Integer, String>();
 
-    public static void newPacket(String namePack){
-        //Al encontrar un paquete en UserHandler se agrega a los mapas, y cual sera su posicion en la matriz
+    /**
+     * Al encontrar un paquete en UserHandler se agrega a los mapas, y cual sera su posicion en la matriz
+     * @param namePack es el nombre del paquete encontrado en el XML.
+     */
+    static void newPacket(String namePack){
         referencia.put(namePack,cantpak-1);
         InvReferencia.put(cantpak-1,namePack);
     }
 
-    public static void matrizInic(){
-        //Iniciacion con la cantidad de paquetes
+    /**
+     * Iniciacion con la cantidad de paquetes
+     */
+    private static void matrizInic(){
         depMatriz = new boolean[cantpak][cantpak];
     }
 
-    public static String getPack(String PackWClass){
-        //Se elimina el nombre de la clase del paquete
+    /**
+     * Se elimina el nombre del componente en el String, para que quede unicamente el nombre del paquete.
+     * @param PackWClass String completo (con el nombre del componente)
+     * @return nombre del paquete sin el componente.
+     */
+    private static String getPack(String PackWClass){
         int pos = 0;
         for(int i = 0; i < PackWClass.length();i++){
             if (PackWClass.charAt(i) == '.'){
@@ -39,39 +56,41 @@ public class SAXParserDemo {
         return PackWClass.substring(0,(pos));
     }
 
-    public static void fillMatriz(String packDep){
-        //Llamado desde Userhandler al encontrar un paquete valido
-        //cantpack es aumentado desde UserHandler, marca el paquete actual y la fila actual de la matriz
+    /**
+     * Llamado desde Userhandler al encontrar un paquete valido. Cantpack es aumentado desde UserHandler, marca el
+     * paquete actual y la fila actual de la matriz
+     * @param packDep nombre del paquete dependencia encontrada.
+     */
+    static void fillMatriz(String packDep){
         if ((referencia.containsKey(getPack(packDep)))){
             depMatriz[cantpak-1][referencia.get(getPack(packDep))] = true;
         }
     }
 
+    /**
+     * Levanta el XML del path indicado al crear el objeto File. Después llama al parser con los parametros indicados
+     * en UserHandler. Hace dos pasadas, una para levantar todos los paquetes del sistema y poder tener el tamaño de la
+     * matriz, y la segunda pasada la hace para establecer las dependencias en la matriz.
+     * @param args argumentos del main. AL final vuela.
+     */
     public static void main(String[] args) {
-
         try {
-            //Iniciacion de mapas para referencias nro paquete y pos en la matriz
-            referencia = new HashMap<String, Integer>();
-            InvReferencia = new HashMap<Integer, String>();
-
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             SAXParser saxParser = factory.newSAXParser();
             File inputFile = new File("."+File.separator+"dependencias"+File.separator+"hibernate-core-4.2.0.Final.odem");
             UserHandler userhandler = new UserHandler();
+
             saxParser.parse(inputFile, userhandler);
 
-            //Inicializacion de matriz de referencia, preparar flag para carga de bandera y reinicio de cantpack
             matrizInic();
             UserHandler.flagCarga = true;
             cantpak = 0;
-
-            //Segunda pasada para cargar matriz
             saxParser.parse(inputFile, userhandler);
 
             //Prueba impresion de depencias
             for (int i = 1; i < cantpak-1; i++){
-                    if (depMatriz[0][i] == true){
+                    if (depMatriz[0][i]){
                         System.out.println("El primero depende del segundo:");
                         System.out.println(InvReferencia.get(0));
                         System.out.println(InvReferencia.get(i));

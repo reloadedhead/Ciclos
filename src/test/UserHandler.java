@@ -29,29 +29,4 @@ public class UserHandler extends DefaultHandler {
             }
         }
     }
-
-    @Override
-    public void endElement(String uri,
-                           String localName, String qName) throws SAXException {
-        if (qName.equalsIgnoreCase("namespace")){
-            //System.out.println("End Element :" + qName);
-        }
-        else if (qName.equalsIgnoreCase("type"))
-            bType = false;
-    }
-
-    @Override
-    public void characters(char ch[], int start, int length) throws SAXException {
-
-        if (bType) {
-            System.out.println("Type: "
-                    + new String(ch, start, length));
-        } else if (bLastName) {
-            System.out.println("Last Name: " + new String(ch, start, length));
-        } else if (bNickName) {
-            System.out.println("Nick Name: " + new String(ch, start, length));
-        } else if (bMarks) {
-            System.out.println("Marks: " + new String(ch, start, length));
-        }
-    }
 }
