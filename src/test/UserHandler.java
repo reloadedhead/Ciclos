@@ -28,12 +28,6 @@ public class UserHandler extends DefaultHandler {
                 SAXParserDemo.fillMatriz(packageDep);
             }
         }
-//		} else if (qName.equalsIgnoreCase("nickname")) {
-//			bNickName = true;
-//		}
-//		else if (qName.equalsIgnoreCase("marks")) {
-//			bMarks = true;
-//		}
     }
 
     @Override
@@ -44,13 +38,6 @@ public class UserHandler extends DefaultHandler {
         }
         else if (qName.equalsIgnoreCase("type"))
             bType = false;
-//		else if (qName.equalsIgnoreCase("lastname"))
-//			bLastName = false;
-//		else if (qName.equalsIgnoreCase("nickname"))
-//			bNickName = false;
-//		else if (qName.equalsIgnoreCase("marks"))
-//			bMarks = false;
-
     }
 
     @Override
