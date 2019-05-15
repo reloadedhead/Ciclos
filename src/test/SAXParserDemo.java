@@ -1,6 +1,9 @@
 package test;
 
+import Algoritmos.Tarjan;
+
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -89,13 +92,17 @@ public class SAXParserDemo {
             saxParser.parse(inputFile, userhandler);
 
             //Prueba impresion de depencias
-            for (int i = 1; i < cantpak-1; i++){
-                    if (depMatriz[0][i]){
-                        System.out.println("El primero depende del segundo:");
-                        System.out.println(InvReferencia.get(0));
-                        System.out.println(InvReferencia.get(i));
-                    }
-            }
+//            for (int i = 1; i < cantpak-1; i++){
+//                    if (depMatriz[0][i]){
+//                        System.out.println("El primero depende del segundo:");
+//                        System.out.println(InvReferencia.get(0));
+//                        System.out.println(InvReferencia.get(i));
+//                    }
+//            }
+
+            Tarjan sccs = new Tarjan(depMatriz);
+            System.out.println("Strong connected component count: " + sccs.countStronglyConnectedComponents());
+            System.out.println("Strong connected components:\n" + Arrays.toString(sccs.getStronglyConnectedComponents()) );
 
         } catch (Exception e) {
             e.printStackTrace();
