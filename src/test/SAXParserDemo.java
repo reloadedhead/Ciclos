@@ -51,12 +51,13 @@ public class SAXParserDemo {
      */
     private static String getPack(String PackWClass){
         int pos = 0;
+        StringBuilder builder = new StringBuilder(PackWClass);
         for(int i = 0; i < PackWClass.length();i++){
-            if (PackWClass.charAt(i) == '.'){
+            if (builder.charAt(i) == '.'){
                 pos = i;
             }
         }
-        return PackWClass.substring(0,(pos));
+        return builder.substring(0, pos);
     }
 
     /**
