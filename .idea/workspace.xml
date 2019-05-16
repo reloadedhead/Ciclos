@@ -30,10 +30,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/TarjanAdjacencyMatrix.java">
+        <entry file="file://$PROJECT_DIR$/src/test/TarjanAdjacencyMatrix.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="58" column="49" selection-start-line="58" selection-start-column="49" selection-end-line="58" selection-end-column="49" />
+            <state relative-caret-position="34">
+              <caret line="2" column="6" lean-forward="true" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
               <folding>
                 <element signature="e#2916#2917#0" expanded="true" />
                 <element signature="e#2957#2958#0" expanded="true" />
@@ -95,6 +95,7 @@
         <option value="$PROJECT_DIR$/src/test/SAXParserDemo.java" />
         <option value="$PROJECT_DIR$/src/test/UserHandler.java" />
         <option value="$PROJECT_DIR$/src/TarjanAdjacencyMatrix.java" />
+        <option value="$PROJECT_DIR$/src/test/TarjanAdjacencyMatrix.java" />
       </list>
     </option>
   </component>
@@ -126,6 +127,12 @@
               <item name="ciclos" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ciclos" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ciclos" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -135,8 +142,11 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557967488414" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557967785864" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -209,7 +219,7 @@
       <option name="presentableId" value="Default" />
       <updated>1557610492867</updated>
       <workItem from="1557610494115" duration="1093000" />
-      <workItem from="1557966857616" duration="441000" />
+      <workItem from="1557966857616" duration="698000" />
     </task>
     <task id="LOCAL-00001" summary="Agregado comentario a los path">
       <created>1557611901746</created>
@@ -246,14 +256,29 @@
       <option name="project" value="LOCAL" />
       <updated>1557967182316</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Creado de mecanismo para iniciar la matriz de dependencias y los mapas correspondientes para su uso. Ademas de su llenado correspondiente">
+      <created>1557967365319</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1557967365319</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Creado de mecanismo para iniciar la matriz de dependencias y los mapas correspondientes para su uso. Ademas de su llenado correspondiente">
+      <created>1557967517899</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1557967517899</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3059000" />
+    <option name="totallyTimeSpent" value="3316000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18017058" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -273,7 +298,7 @@
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32970297" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32936078" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32719547" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -340,10 +365,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/TarjanAdjacencyMatrix.java">
+    <entry file="file://$PROJECT_DIR$/src/test/TarjanAdjacencyMatrix.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="58" column="49" selection-start-line="58" selection-start-column="49" selection-end-line="58" selection-end-column="49" />
+        <state relative-caret-position="34">
+          <caret line="2" column="6" lean-forward="true" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
           <folding>
             <element signature="e#2916#2917#0" expanded="true" />
             <element signature="e#2957#2958#0" expanded="true" />
