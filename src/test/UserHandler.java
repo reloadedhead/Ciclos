@@ -5,11 +5,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class UserHandler extends DefaultHandler {
-
-    boolean bType = false;
-    boolean bLastName = false;
-    boolean bNickName = false;
-    boolean bMarks = false;
     static boolean packagesAreLoaded = false;
 
     @Override
@@ -25,7 +20,7 @@ public class UserHandler extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("depends-on")) {
             String packageDep = attributes.getValue("name");
             if ((packagesAreLoaded)&&(!packageDep.contains("java"))){
-                SAXParserDemo.fillMatriz(packageDep);
+                SAXParserDemo.fillMatrix(packageDep);
             }
         }
     }

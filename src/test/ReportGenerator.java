@@ -6,11 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ReportGenerator {
-	private String path;
 	private File reportFile;
 
 	public ReportGenerator(String path) {
-		this.path = path;
 		reportFile = new File(path);
 	}
 
@@ -18,18 +16,18 @@ public class ReportGenerator {
 		try{
 			if (reportFile.createNewFile()){
 				FileWriter writer = new FileWriter(reportFile);
-				StringBuilder cyclePrint = new StringBuilder();
-				cyclePrint.append("Ciclos de dependencias para el sistema " + sysName);
-				cyclePrint.append("\\r\\n");
-				cyclePrint.append("- ");
+				StringBuilder line = new StringBuilder();
+				line.append(new StringBuilder("Ciclos de dependencias para el sistema ").append(sysName));
+				line.append("\\r\\n");
+				line.append("- ");
 				for (ArrayList<Integer> cycle:cycleList) {
 					for(Integer node:cycle){
-						cyclePrint.append(node.toString());
+						line.append(node.toString());
 					}
-					cyclePrint.append("\\r\\n");
+					line.append("\\r\\n");
 				}
 
-				writer.write(String.valueOf(cyclePrint));
+				writer.write(String.valueOf(line));
 				writer.close();
 			}
 		} catch (IOException e){
