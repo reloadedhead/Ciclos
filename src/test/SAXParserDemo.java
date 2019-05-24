@@ -52,7 +52,7 @@ public class SAXParserDemo {
      * @param PackWClass String completo (con el nombre del componente)
      * @return nombre del paquete sin el componente.
      */
-    private static String getPackage(String PackWClass){
+    private static String getPackage(String PackWClass){ //TODO StringBuilder
         int pos = 0;
         for(int i = 0; i < PackWClass.length();i++){
             if (PackWClass.charAt(i) == '.'){
@@ -78,7 +78,7 @@ public class SAXParserDemo {
      * @param listaCiclos Mapa con el tamaño de como clave y el ciclo en un ArrayList.
      * @param size tamaño que queremos eliminar.
      */
-    private static void deleteCicles(HashMap<Integer, ArrayList> listaCiclos, int size){
+    private static void deleteCycles(HashMap<Integer, ArrayList> listaCiclos, int size){
         Set<Integer> clavesCiclos = listaCiclos.keySet();
         Integer[] KeySetArray = new Integer[clavesCiclos.size()];
         clavesCiclos.toArray(KeySetArray);
@@ -88,6 +88,28 @@ public class SAXParserDemo {
                 listaCiclos.remove(key);
             }
         }
+    }
+
+
+    /**
+     * Este método devuelve un arreglo de arreglos, donde cada "sub arreglo" corresponde a un ciclo. Lo que hace es
+     * iterar sobre el arreglo de componentes fuertemente conectadas que devuelve el algoritmo de Tarjan, el cual
+     * tiene de tamaño la cantidad de paquetes y en A[i] indica a qué número de ciclo pertenece el paquete i.
+     * @param t objeto Tarjan
+     * @return Lista de ciclos, cada ciclo es una lista de paquetes.
+     */
+    private static ArrayList<ArrayList<Integer>> getCyclesFromTarjan(Tarjan t){
+        ArrayList<ArrayList<Integer>> dependencyCycles = new ArrayList<>();
+        int[] stronglyConnectedComponents = t.getStronglyConnectedComponents();
+        for (int i = 0; i<stronglyConnectedComponents.length; i++) {
+            if (dependencyCycles.get(stronglyConnectedComponents[i]) == null){
+                dependencyCycles.add(stronglyConnectedComponents[i], new ArrayList<>());
+                dependencyCycles.get(i).add(i);
+            } else {
+                dependencyCycles.get(stronglyConnectedComponents[i]).add(i);
+            }
+        }
+        return dependencyCycles;
     }
 
 
@@ -142,42 +164,37 @@ public class SAXParserDemo {
                 dependenciesMatrix[i][i] = false;
 
 
-            HashMap<Integer, ArrayList> listaCiclos = getCycleListFromTarjan(t); //Crear listas de ciclos
-            deleteCicles(listaCiclos, 3); //Eliminar listas de ciclos con menos de 3 componenetes
+            ArrayList<ArrayList<Integer>> cycleList= getCyclesFromTarjan(t); //nueva version
+            cycleList.removeIf(cycle -> (cycle.size() < 3)); //aca le saco los ciclos que tengan tamaño 3 wow quedo en una linea
+
+            ReportGenerator reporter = new ReportGenerator("."+File.separator+"Lista de ciclos");
+            reporter.generateReport(cycleList, "Systema X");
+
+//            HashMap<Integer, ArrayList> listaCiclos = getCycleListFromTarjan(t); //vieja version Crear listas de ciclos
+//            deleteCycles(listaCiclos, 3); //vieja version Eliminar listas de ciclos con menos de 3 componenetes
 
             //Crear Archivo txt con informacion de ciclos
-            File file = new File("."+File.separator+"Lista de ciclos");
-            //Create the file
-            try{
-                if (file.createNewFile())
-                {
-                    System.out.println("File is created!");
-                } else {
-                    System.out.println("File already exists.");
-                }
-            } catch (IOException e){
-                System.out.println("NO");
-            }
 
-            Set<Integer> clavesCiclosPosElim = listaCiclos.keySet();
-            Integer[] KeySetArrayPosElim = new Integer[clavesCiclosPosElim.size()];
-            clavesCiclosPosElim.toArray(KeySetArrayPosElim);
-            String ciclos = "";
+
+//            Set<Integer> clavesCiclosPosElim = listaCiclos.keySet();
+//            Integer[] KeySetArrayPosElim = new Integer[clavesCiclosPosElim.size()];
+//            clavesCiclosPosElim.toArray(KeySetArrayPosElim);
+//            String ciclos = "";
 
 
             //Write Content
-            FileWriter writer = new FileWriter(file);
-            for (int i = 0;i<KeySetArrayPosElim.length;i++){
-                ciclos = ciclos + "El ciclo de depencias " + KeySetArrayPosElim[i] + " esta compuesto por: ";
-                for (int j = 0; j < listaCiclos.get(KeySetArrayPosElim[i]).size(); j++){
-                    System.out.println(ciclos);
-                    ciclos = ciclos + " " + InvReferencia.get(listaCiclos.get(KeySetArrayPosElim[i]).get(j)) + " ";
-                }
-                ciclos = ciclos + " \\r\\n";
-            }
-
-            writer.write(ciclos);
-            writer.close();
+//            WriteFileWriter writer = new FileWriter(file);
+//            for (int i = 0;i<KeySetArrayPosElim.length;i++){
+//                ciclos = ciclos + "El ciclo de depencias " + KeySetArrayPosElim[i] + " esta compuesto por: ";
+//                for (int j = 0; j < listaCiclos.get(KeySetArrayPosElim[i]).size(); j++){
+//                    System.out.println(ciclos);
+//                    ciclos = ciclos + " " + InvReferencia.get(listaCiclos.get(KeySetArrayPosElim[i]).get(j)) + " ";
+//                }
+//                ciclos = ciclos + " \\r\\n";
+//            }
+//
+//            writer.write(ciclos);
+//            writer.close();
 
         } catch (Exception e) {
             e.printStackTrace();
