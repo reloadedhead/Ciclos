@@ -10,7 +10,7 @@ public class UserHandler extends DefaultHandler {
     boolean bLastName = false;
     boolean bNickName = false;
     boolean bMarks = false;
-    static boolean flagCarga = false;
+    static boolean packagesAreLoaded = false;
 
     @Override
     public void startElement(String uri,
@@ -18,13 +18,13 @@ public class UserHandler extends DefaultHandler {
 
         if (qName.equalsIgnoreCase("namespace")) {
             String packageName = attributes.getValue("name");
-            SAXParserDemo.cantpak++;
-            if (!(flagCarga)){
+            SAXParserDemo.numberOfPackages++;
+            if (!(packagesAreLoaded)){
                 SAXParserDemo.newPacket(packageName);
             }
         } else if (qName.equalsIgnoreCase("depends-on")) {
             String packageDep = attributes.getValue("name");
-            if ((flagCarga)&&(!packageDep.contains("java"))){
+            if ((packagesAreLoaded)&&(!packageDep.contains("java"))){
                 SAXParserDemo.fillMatriz(packageDep);
             }
         }
