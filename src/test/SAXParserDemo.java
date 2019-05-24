@@ -3,8 +3,10 @@ package test;
 import Algoritmos.Tarjan;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.security.Key;
+import java.util.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -51,13 +53,12 @@ public class SAXParserDemo {
      */
     private static String getPack(String PackWClass){
         int pos = 0;
-        StringBuilder builder = new StringBuilder(PackWClass);
         for(int i = 0; i < PackWClass.length();i++){
-            if (builder.charAt(i) == '.'){
+            if (PackWClass.charAt(i) == '.'){
                 pos = i;
             }
         }
-        return builder.substring(0, pos);
+        return PackWClass.substring(0,(pos));
     }
 
     /**
@@ -92,18 +93,74 @@ public class SAXParserDemo {
             cantpak = 0;
             saxParser.parse(inputFile, userhandler);
 
-            //Prueba impresion de depencias
-//            for (int i = 1; i < cantpak-1; i++){
-//                    if (depMatriz[0][i]){
-//                        System.out.println("El primero depende del segundo:");
-//                        System.out.println(InvReferencia.get(0));
-//                        System.out.println(InvReferencia.get(i));
-//                    }
-//            }
+            //Inicializacion de Tarjan
+            Tarjan t = new Tarjan(depMatriz);
 
-            Tarjan sccs = new Tarjan(depMatriz);
-            System.out.println("Strong connected component count: " + sccs.countStronglyConnectedComponents());
-            System.out.println("Strong connected components:\n" + Arrays.toString(sccs.getStronglyConnectedComponents()) );
+            //Limpiar Diagonal
+            for (int i = 0; i<cantpak;i++)
+                depMatriz[i][i] = false;
+
+            //Mostrar Dependencias TEST
+
+            int [] CFC = t.getStronglyConnectedComponents();
+
+
+            //Crear listas de ciclos
+            HashMap<Integer, ArrayList> listaCiclos = new HashMap<>();
+            for (int i=0;i<CFC.length;i++){
+                if (!listaCiclos.containsKey(CFC[i])){
+                    ArrayList<Integer> parcial = new ArrayList<>();
+                    parcial.add(CFC[i]);
+                    listaCiclos.put(CFC[i],parcial);
+                } else{
+                    listaCiclos.get(CFC[i]).add(i);
+                }
+            }
+
+            //Eliminar listas de ciclos con menos de 3 componenetes
+            Set<Integer> clavesCiclos = listaCiclos.keySet();
+            Integer[] KeySetArray = new Integer[clavesCiclos.size()];
+            clavesCiclos.toArray(KeySetArray);
+            for (Integer key: KeySetArray
+                 ) {
+                if (listaCiclos.get(key).size() < 3){
+                    listaCiclos.remove(key);
+                }
+            }
+
+            //Crear Archivo txt con informacion de ciclos
+            File file = new File("."+File.separator+"Lista de ciclos");
+            //Create the file
+            try{
+                if (file.createNewFile())
+                {
+                    System.out.println("File is created!");
+                } else {
+                    System.out.println("File already exists.");
+                }
+            } catch (IOException e){
+                System.out.println("NO");
+            }
+
+            Set<Integer> clavesCiclosPosElim = listaCiclos.keySet();
+            Integer[] KeySetArrayPosElim = new Integer[clavesCiclosPosElim.size()];
+            clavesCiclosPosElim.toArray(KeySetArrayPosElim);
+            String ciclos = "";
+
+
+            //Write Content
+            FileWriter writer = new FileWriter(file);
+            for (int i = 0;i<KeySetArrayPosElim.length;i++){
+                ciclos = ciclos + "El ciclo de depencias " + KeySetArrayPosElim[i] + " esta compuesto por: ";
+                for (int j = 0; j < listaCiclos.get(KeySetArrayPosElim[i]).size(); j++){
+                    System.out.println(ciclos);
+                    ciclos = ciclos + " " + InvReferencia.get(listaCiclos.get(KeySetArrayPosElim[i]).get(j)) + " ";
+                }
+                ciclos = ciclos + " \\r\\n";
+            }
+
+            writer.write(ciclos);
+            writer.close();
 
         } catch (Exception e) {
             e.printStackTrace();
