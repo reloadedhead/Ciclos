@@ -3,6 +3,7 @@ package test;
 import Algoritmos.Tarjan;
 import java.io.File;
 import java.util.*;
+import javax.swing.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -109,31 +110,38 @@ public class SAXParserDemo {
      */
     public static void main(String[] args) {
         try {
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-            SAXParser saxParser = factory.newSAXParser();
-            File inputFile = new File("."+File.separator+"dependencias"+File.separator+"hibernate-core-4.2.0.Final.odem");
-            UserHandler userhandler = new UserHandler();
+            JFileChooser j = new JFileChooser("./dependencias");
+            j.setDialogTitle("Seleccione archivo .odem");
+            j.showOpenDialog(null);
 
-            saxParser.parse(inputFile, userhandler);
+            if (j.getSelectedFile()!=null)
+            {
+                SAXParserFactory factory = SAXParserFactory.newInstance();
+                factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+                SAXParser saxParser = factory.newSAXParser();
+                File inputFile = j.getSelectedFile();// = new File("."+File.separator+"dependencias"+File.separator+"hibernate-core-4.2.0.Final.odem");
+                UserHandler userhandler = new UserHandler();
 
-            matrixInit();
-            UserHandler.packagesAreLoaded = true;
-            numberOfPackages = 0;
-            saxParser.parse(inputFile, userhandler);
+                saxParser.parse(inputFile, userhandler);
 
-            Tarjan t = new Tarjan(dependenciesMatrix);
+                matrixInit();
+                UserHandler.packagesAreLoaded = true;
+                numberOfPackages = 0;
+                saxParser.parse(inputFile, userhandler);
 
-            for (int i = 0; i<numberOfPackages;i++)
-                dependenciesMatrix[i][i] = false;
+                Tarjan t = new Tarjan(dependenciesMatrix);
+
+                for (int i = 0; i<numberOfPackages;i++)
+                    dependenciesMatrix[i][i] = false;
 
 
-            ArrayList<ArrayList<Integer>> cycleList = getCyclesFromTarjan(t);
-            cycleList.removeIf(cycle -> (cycle.size() < 3));
+                ArrayList<ArrayList<Integer>> cycleList = getCyclesFromTarjan(t);
+                cycleList.removeIf(cycle -> (cycle.size() < 3));
 
-            ReportGenerator reporter = new ReportGenerator("."+File.separator+"Lista de ciclos");
-            reporter.generateReport(cycleList, "Systema X");
+                ReportGenerator reporter = new ReportGenerator("."+File.separator+"Lista de ciclos");
+                reporter.generateReport(cycleList, inputFile.getName());
 
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
