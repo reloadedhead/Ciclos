@@ -139,7 +139,7 @@ public class SAXParserDemo {
                 ArrayList<ArrayList<Integer>> cycleList = getCyclesFromTarjan(t);
                 cycleList.removeIf(cycle -> (cycle.size() < 3));
 
-                ReportGenerator reporter = new ReportGenerator("."+File.separator+"Lista de ciclos");
+                ReportGenerator reporter = new ReportGenerator("."+File.separator+inputFile.getName()+"- Lista de ciclos.txt");
                 reporter.generateReport(cycleList, inputFile.getName());
 
             }
