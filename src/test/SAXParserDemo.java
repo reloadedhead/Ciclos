@@ -4,6 +4,7 @@ import Algoritmos.Tarjan;
 import java.io.File;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -111,7 +112,18 @@ public class SAXParserDemo {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            JFileChooser j = new JFileChooser("./dependencias");
+            JFileChooser j = new JFileChooser("./");
+            j.setFileFilter(new FileFilter() {
+                @Override
+                public boolean accept(File f) {
+                    return f.getName().endsWith(".odem");
+                }
+
+                @Override
+                public String getDescription() {
+                    return "*.odem";
+                }
+            });
             j.setDialogTitle("Seleccione archivo .odem");
             j.showOpenDialog(null);
 
