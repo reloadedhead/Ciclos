@@ -110,6 +110,7 @@ public class SAXParserDemo {
      */
     public static void main(String[] args) {
         try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             JFileChooser j = new JFileChooser("./dependencias");
             j.setDialogTitle("Seleccione archivo .odem");
             j.showOpenDialog(null);
