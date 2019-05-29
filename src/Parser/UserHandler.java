@@ -1,4 +1,4 @@
-package test;
+package Parser;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -13,14 +13,14 @@ public class UserHandler extends DefaultHandler {
 
         if (qName.equalsIgnoreCase("namespace")) {
             String packageName = attributes.getValue("name");
-            SAXParserDemo.numberOfPackages++;
+            SAX.numberOfPackages++;
             if (!(packagesAreLoaded)){
-                SAXParserDemo.newPacket(packageName);
+                SAX.newPacket(packageName);
             }
         } else if (qName.equalsIgnoreCase("depends-on")) {
             String packageDep = attributes.getValue("name");
             if ((packagesAreLoaded)&&(!packageDep.contains("java"))){
-                SAXParserDemo.fillMatrix(packageDep);
+                SAX.fillMatrix(packageDep);
             }
         }
     }

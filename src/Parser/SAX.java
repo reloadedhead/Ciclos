@@ -1,6 +1,8 @@
-package test;
+package Parser;
 
 import Algoritmos.Tarjan;
+import Utils.ReportGenerator;
+
 import java.io.File;
 import java.util.*;
 import javax.swing.*;
@@ -9,9 +11,9 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 /**
- * Clase de SAXParser. Se encarga de levantar el XML. Por ahrora levanta solo uno, indicado en el path del metodo main.
+ * Clase de SAX. Se encarga de levantar el XML. Por ahrora levanta solo uno, indicado en el path del metodo main.
  */
-public class SAXParserDemo {
+public class SAX {
     /**
      * Contador de numero total de paquetes, usado para crear matriz y como fila actual
      */
@@ -75,7 +77,6 @@ public class SAXParserDemo {
         for(int i = 0; i < size; i++){
             array.add(i, null);
         }
-        System.out.println(array.size());
     }
 
     /**
@@ -89,8 +90,6 @@ public class SAXParserDemo {
         int[] stronglyConnectedComponents = t.getStronglyConnectedComponents();
         ArrayList<ArrayList<Integer>> dependencyCycles = new ArrayList<>(t.countStronglyConnectedComponents());
         setNullArrayList(dependencyCycles, t.countStronglyConnectedComponents());
-        System.out.println("Cantidad de ciclos segun t " + t.countStronglyConnectedComponents());
-        System.out.println("Tamaño del arraylist " + dependencyCycles.size());
         for (int i = 0; i<stronglyConnectedComponents.length; i++) {
             if (dependencyCycles.get(stronglyConnectedComponents[i]) == null){
                 dependencyCycles.set(stronglyConnectedComponents[i], new ArrayList<>());
@@ -111,7 +110,7 @@ public class SAXParserDemo {
      */
     public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+           // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             JFileChooser j = new JFileChooser("./");
             j.setFileFilter(new FileFilter() {
                 @Override
@@ -131,7 +130,7 @@ public class SAXParserDemo {
             {
                 SAXParserFactory factory = SAXParserFactory.newInstance();
                 factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-                SAXParser saxParser = factory.newSAXParser();
+                javax.xml.parsers.SAXParser saxParser = factory.newSAXParser();
                 File inputFile = j.getSelectedFile();// = new File("."+File.separator+"dependencias"+File.separator+"hibernate-core-4.2.0.Final.odem");
                 UserHandler userhandler = new UserHandler();
 
@@ -152,7 +151,7 @@ public class SAXParserDemo {
                 cycleList.removeIf(cycle -> (cycle.size() < 3));
 
                 ReportGenerator reporter = new ReportGenerator("."+File.separator+inputFile.getName()+"- Lista de ciclos.txt");
-                reporter.generateReport(cycleList, inputFile.getName());
+                reporter.generateReport(cycleList, inputFile.getName(), InvReferencia);
 
             }
         } catch (Exception e) {

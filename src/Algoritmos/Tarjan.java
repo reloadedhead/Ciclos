@@ -2,14 +2,20 @@ package Algoritmos;
 
 import java.util.Stack;
 
+/**
+ * La clase Tarjan es la implementación del algoritmo de Tarjan para encontrar componentes fuertemente conectados
+ * dentro de un grafo dirigido, a partir de una matriz de adyacencia.
+ */
 public class Tarjan {
     private int n, pre, count = 0;
     private int[] compoonentes, low;
     private boolean[] marcados;
     private boolean[][] adj;
     private Stack<Integer> stack = new Stack<>();
-    
-    //El input del algoritmo es una matriz de adjacencias de tamaño n
+
+    /**El input del algoritmo es una matriz de adjacencias de tamaño n
+     * @param adj matriz de adyacencias
+     */
     public Tarjan(boolean[][] adj) {
         n = adj.length;
         this.adj = adj;
@@ -23,6 +29,10 @@ public class Tarjan {
             }
     }
 
+    /**
+     * Depth First Search
+     * @param u nodo
+     */
     private void dfs(int u) {
         marcados[u] = true;
         low[u] = pre++;
@@ -40,13 +50,19 @@ public class Tarjan {
         count++;
     }
 
-    // Returns the compoonentes array with the strongly connected components.
-    // If compoonentes[i] == compoonentes[j] then nodes i and j are part of the same strongly connected component.
+    /** Este metodo devuelve en un arreglo de enteros los ciclos. Si compoonentes[i] == compoonentes[j] entonces los
+     * nodos i y j son parte del mismo componente fuertemente conectado.
+     * @return arreglo de componentes fuertemente conectadas.
+     */
     public int[] getStronglyConnectedComponents() {
         return compoonentes.clone();
     }
 
-    // Returns the number of strongly connected components in this graph
+
+    /**
+     * Este método devuelve la cantidad de ciclos.
+     * @return cantidad de ciclos del grafo.
+     */
     public int countStronglyConnectedComponents() {
         return count;
         }

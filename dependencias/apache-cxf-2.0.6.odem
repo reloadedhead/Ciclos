@@ -10616,18 +10616,18 @@
           </dependencies>
         </type>
       </namespace>
-      <namespace name="org.apache.cxf.test">
-        <type name="org.apache.cxf.test.AbstractCXFTest$TestMessageObserver" classification="class" visibility="public">
+      <namespace name="org.apache.cxf.Parser">
+        <type name="org.apache.cxf.Parser.AbstractCXFTest$TestMessageObserver" classification="class" visibility="public">
           <dependencies count="3">
-            <depends-on name="org.apache.cxf.test.TestUtilities$TestMessageObserver" classification="extends" />
-            <depends-on name="org.apache.cxf.test.AbstractCXFTest" classification="uses" />
-            <depends-on name="org.apache.cxf.test.TestUtilities" classification="uses" />
+            <depends-on name="org.apache.cxf.Parser.TestUtilities$TestMessageObserver" classification="extends" />
+            <depends-on name="org.apache.cxf.Parser.AbstractCXFTest" classification="uses" />
+            <depends-on name="org.apache.cxf.Parser.TestUtilities" classification="uses" />
           </dependencies>
         </type>
-        <type name="org.apache.cxf.test.AbstractCXFTest" classification="class" visibility="public">
+        <type name="org.apache.cxf.Parser.AbstractCXFTest" classification="class" visibility="public">
           <dependencies count="21">
             <depends-on name="org.junit.Assert" classification="extends" />
-            <depends-on name="org.apache.cxf.test.TestUtilities" classification="uses" />
+            <depends-on name="org.apache.cxf.Parser.TestUtilities" classification="uses" />
             <depends-on name="org.apache.cxf.Bus" classification="uses" />
             <depends-on name="org.junit.Before" classification="uses" />
             <depends-on name="org.junit.After" classification="uses" />
@@ -10640,7 +10640,7 @@
             <depends-on name="java.io.File" classification="uses" />
             <depends-on name="org.w3c.dom.Document" classification="uses" />
             <depends-on name="org.apache.cxf.endpoint.Server" classification="uses" />
-            <depends-on name="org.apache.cxf.test.AbstractCXFTest$TestMessageObserver" classification="uses" />
+            <depends-on name="org.apache.cxf.Parser.AbstractCXFTest$TestMessageObserver" classification="uses" />
             <depends-on name="java.lang.Exception" classification="uses" />
             <depends-on name="org.apache.cxf.BusException" classification="uses" />
             <depends-on name="javax.wsdl.WSDLException" classification="uses" />
@@ -10649,7 +10649,7 @@
             <depends-on name="org.apache.cxf.BusFactory" classification="uses" />
           </dependencies>
         </type>
-        <type name="org.apache.cxf.test.TestUtilities$TestMessageObserver" classification="class" visibility="public">
+        <type name="org.apache.cxf.Parser.TestUtilities$TestMessageObserver" classification="class" visibility="public">
           <dependencies count="14">
             <depends-on name="java.lang.Object" classification="extends" />
             <depends-on name="org.apache.cxf.transport.MessageObserver" classification="implements" />
@@ -10664,10 +10664,10 @@
             <depends-on name="org.apache.cxf.helpers.IOUtils" classification="uses" />
             <depends-on name="java.io.OutputStream" classification="uses" />
             <depends-on name="java.lang.Throwable" classification="uses" />
-            <depends-on name="org.apache.cxf.test.TestUtilities" classification="uses" />
+            <depends-on name="org.apache.cxf.Parser.TestUtilities" classification="uses" />
           </dependencies>
         </type>
-        <type name="org.apache.cxf.test.TestUtilities" classification="class" visibility="public">
+        <type name="org.apache.cxf.Parser.TestUtilities" classification="class" visibility="public">
           <dependencies count="47">
             <depends-on name="java.lang.Object" classification="extends" />
             <depends-on name="java.lang.String" classification="uses" />
@@ -10680,7 +10680,7 @@
             <depends-on name="org.apache.cxf.transport.ConduitInitiatorManager" classification="uses" />
             <depends-on name="org.apache.cxf.transport.ConduitInitiator" classification="uses" />
             <depends-on name="org.apache.cxf.transport.Conduit" classification="uses" />
-            <depends-on name="org.apache.cxf.test.TestUtilities$TestMessageObserver" classification="uses" />
+            <depends-on name="org.apache.cxf.Parser.TestUtilities$TestMessageObserver" classification="uses" />
             <depends-on name="org.apache.cxf.message.Message" classification="uses" />
             <depends-on name="java.io.OutputStream" classification="uses" />
             <depends-on name="java.io.InputStream" classification="uses" />
@@ -10708,7 +10708,7 @@
             <depends-on name="javax.wsdl.WSDLException" classification="uses" />
             <depends-on name="java.lang.System" classification="uses" />
             <depends-on name="java.lang.Boolean" classification="uses" />
-            <depends-on name="org.apache.cxf.test.XPathAssert" classification="uses" />
+            <depends-on name="org.apache.cxf.Parser.XPathAssert" classification="uses" />
             <depends-on name="org.apache.cxf.transport.MessageObserver" classification="uses" />
             <depends-on name="org.apache.cxf.helpers.IOUtils" classification="uses" />
             <depends-on name="java.io.ByteArrayOutputStream" classification="uses" />
@@ -10718,7 +10718,7 @@
             <depends-on name="java.util.List" classification="uses" />
           </dependencies>
         </type>
-        <type name="org.apache.cxf.test.XPathAssert$MapNamespaceContext" classification="class" visibility="default">
+        <type name="org.apache.cxf.Parser.XPathAssert$MapNamespaceContext" classification="class" visibility="default">
           <dependencies count="8">
             <depends-on name="java.lang.Object" classification="extends" />
             <depends-on name="javax.xml.namespace.NamespaceContext" classification="uses" />
@@ -10727,10 +10727,10 @@
             <depends-on name="java.util.Map$Entry" classification="uses" />
             <depends-on name="java.util.Iterator" classification="uses" />
             <depends-on name="java.util.Set" classification="uses" />
-            <depends-on name="org.apache.cxf.test.XPathAssert" classification="uses" />
+            <depends-on name="org.apache.cxf.Parser.XPathAssert" classification="uses" />
           </dependencies>
         </type>
-        <type name="org.apache.cxf.test.XPathAssert" classification="class" visibility="public" isFinal="yes">
+        <type name="org.apache.cxf.Parser.XPathAssert" classification="class" visibility="public" isFinal="yes">
           <dependencies count="23">
             <depends-on name="java.lang.Object" classification="extends" />
             <depends-on name="org.w3c.dom.NodeList" classification="uses" />
@@ -10745,7 +10745,7 @@
             <depends-on name="java.lang.StringBuilder" classification="uses" />
             <depends-on name="java.lang.RuntimeException" classification="uses" />
             <depends-on name="java.util.HashMap" classification="uses" />
-            <depends-on name="org.apache.cxf.test.XPathAssert$MapNamespaceContext" classification="uses" />
+            <depends-on name="org.apache.cxf.Parser.XPathAssert$MapNamespaceContext" classification="uses" />
             <depends-on name="java.lang.Exception" classification="uses" />
             <depends-on name="javax.xml.xpath.XPathConstants" classification="uses" />
             <depends-on name="javax.xml.namespace.QName" classification="uses" />
@@ -10757,7 +10757,7 @@
             <depends-on name="javax.xml.namespace.NamespaceContext" classification="uses" />
           </dependencies>
         </type>
-        <type name="org.apache.cxf.test.TestApplicationContext" classification="class" visibility="public">
+        <type name="org.apache.cxf.Parser.TestApplicationContext" classification="class" visibility="public">
           <dependencies count="10">
             <depends-on name="org.springframework.context.support.ClassPathXmlApplicationContext" classification="extends" />
             <depends-on name="java.lang.String" classification="uses" />
@@ -10771,9 +10771,9 @@
             <depends-on name="org.xml.sax.EntityResolver" classification="uses" />
           </dependencies>
         </type>
-        <type name="org.apache.cxf.test.AbstractCXFSpringTest" classification="class" visibility="public" isAbstract="yes">
+        <type name="org.apache.cxf.Parser.AbstractCXFSpringTest" classification="class" visibility="public" isAbstract="yes">
           <dependencies count="16">
-            <depends-on name="org.apache.cxf.test.AbstractCXFTest" classification="extends" />
+            <depends-on name="org.apache.cxf.Parser.AbstractCXFTest" classification="extends" />
             <depends-on name="org.springframework.context.support.GenericApplicationContext" classification="uses" />
             <depends-on name="org.springframework.core.io.DefaultResourceLoader" classification="uses" />
             <depends-on name="org.springframework.beans.factory.xml.XmlBeanDefinitionReader" classification="uses" />
