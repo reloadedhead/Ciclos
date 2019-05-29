@@ -69,6 +69,12 @@ public class SAXParserDemo {
         }
     }
 
+    private static void setNullArrayList(ArrayList<ArrayList<Integer>> array){
+        for(int i = 0; i < array.size(); i++){
+            array.add(i, null);
+        }
+        System.out.println(array.size());
+    }
 
     /**
      * Este método devuelve un arreglo de arreglos, donde cada "sub arreglo" corresponde a un ciclo. Lo que hace es
@@ -78,12 +84,14 @@ public class SAXParserDemo {
      * @return Lista de ciclos, cada ciclo es una lista de paquetes.
      */
     private static ArrayList<ArrayList<Integer>> getCyclesFromTarjan(Tarjan t){
-        ArrayList<ArrayList<Integer>> dependencyCycles = new ArrayList<>();
         int[] stronglyConnectedComponents = t.getStronglyConnectedComponents();
+        ArrayList<ArrayList<Integer>> dependencyCycles = new ArrayList<>(t.countStronglyConnectedComponents());
+        setNullArrayList(dependencyCycles);
+        System.out.println(dependencyCycles.size());
         for (int i = 0; i<stronglyConnectedComponents.length; i++) {
             if (dependencyCycles.get(stronglyConnectedComponents[i]) == null){
-                dependencyCycles.add(stronglyConnectedComponents[i], new ArrayList<>());
-                dependencyCycles.get(i).add(i);
+                dependencyCycles.set(stronglyConnectedComponents[i], new ArrayList<>());
+                dependencyCycles.get(stronglyConnectedComponents[i]).add(i);
             } else {
                 dependencyCycles.get(stronglyConnectedComponents[i]).add(i);
             }
@@ -119,7 +127,7 @@ public class SAXParserDemo {
                 dependenciesMatrix[i][i] = false;
 
 
-            ArrayList<ArrayList<Integer>> cycleList= getCyclesFromTarjan(t);
+            ArrayList<ArrayList<Integer>> cycleList = getCyclesFromTarjan(t);
             cycleList.removeIf(cycle -> (cycle.size() < 3));
 
             ReportGenerator reporter = new ReportGenerator("."+File.separator+"Lista de ciclos");
