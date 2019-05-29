@@ -69,8 +69,8 @@ public class SAXParserDemo {
         }
     }
 
-    private static void setNullArrayList(ArrayList<ArrayList<Integer>> array){
-        for(int i = 0; i < array.size(); i++){
+    private static void setNullArrayList(ArrayList<ArrayList<Integer>> array, int size){
+        for(int i = 0; i < size; i++){
             array.add(i, null);
         }
         System.out.println(array.size());
@@ -86,8 +86,9 @@ public class SAXParserDemo {
     private static ArrayList<ArrayList<Integer>> getCyclesFromTarjan(Tarjan t){
         int[] stronglyConnectedComponents = t.getStronglyConnectedComponents();
         ArrayList<ArrayList<Integer>> dependencyCycles = new ArrayList<>(t.countStronglyConnectedComponents());
-        setNullArrayList(dependencyCycles);
-        System.out.println(dependencyCycles.size());
+        setNullArrayList(dependencyCycles, t.countStronglyConnectedComponents());
+        System.out.println("Cantidad de ciclos segun t " + t.countStronglyConnectedComponents());
+        System.out.println("Tamaño del arraylist " + dependencyCycles.size());
         for (int i = 0; i<stronglyConnectedComponents.length; i++) {
             if (dependencyCycles.get(stronglyConnectedComponents[i]) == null){
                 dependencyCycles.set(stronglyConnectedComponents[i], new ArrayList<>());

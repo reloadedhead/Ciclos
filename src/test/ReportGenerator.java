@@ -18,13 +18,15 @@ public class ReportGenerator {
 				FileWriter writer = new FileWriter(reportFile);
 				StringBuilder line = new StringBuilder();
 				line.append(new StringBuilder("Ciclos de dependencias para el sistema ").append(sysName));
-				line.append("\\r\\n");
+				line.append(" ");
+				line.append("\n");
 				line.append("- ");
 				for (ArrayList<Integer> cycle:cycleList) {
 					for(Integer node:cycle){
 						line.append(node.toString());
+						line.append(" ");
 					}
-					line.append("\\r\\n");
+					line.append("\n");
 				}
 
 				writer.write(String.valueOf(line));
