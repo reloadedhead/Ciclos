@@ -102,17 +102,16 @@ public class SAX {
     }
 
     /**
-     *
+     * Este método devuelve si dos nodos pertenecen a un mismo ciclo.
      * @param nodo1 el indice del primero nodo
      * @param nodo2 el indice del segundo nodo
      * @param cycleList arraylist que contiene todos los ciclos de dependencia
      * @return verdadero si ambos nodos estan en un ciclo
      */
-    private boolean PartedeCiclo(int nodo1,int nodo2,ArrayList<ArrayList<Integer>> cycleList){
-        for (int i = 0 ; i < cycleList.size(); i++){
-            ArrayList<Integer> ciclo = cycleList.get(i);
-            if (ciclo.contains(nodo1))
-                if (ciclo.contains(nodo2))
+    private boolean nodesBelongToSameCycle(int nodo1,int nodo2, ArrayList<ArrayList<Integer>> cycleList){
+        for (ArrayList<Integer> cycle:cycleList) {
+            if (cycle.contains(nodo1))
+                if (cycle.contains(nodo2))
                     return true;
         }
         return false;

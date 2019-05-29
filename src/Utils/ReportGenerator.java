@@ -14,21 +14,24 @@ public class ReportGenerator {
 	}
 
 	public void generateReport(ArrayList<ArrayList<Integer>> cycleList, String sysName, HashMap<Integer, String> packageNames){
+		int cycleNumber = 1;
 		try{
 			if (reportFile.createNewFile()){
 				FileWriter writer = new FileWriter(reportFile);
 				StringBuilder line = new StringBuilder();
 				line.append(new StringBuilder("Ciclos de dependencias para el sistema ").append(sysName));
-				line.append(" ");
-				line.append(System.lineSeparator());
-				line.append("- ");
+				line.append(":");
 				for (ArrayList<Integer> cycle:cycleList) {
-					for(Integer node:cycle){
-						line.append(packageNames.get(node));
-						line.append(" ");
-					}
 					line.append(System.lineSeparator());
-					line.append("- ");
+					line.append("- Ciclo ");
+					line.append(cycleNumber);
+					line.append(System.lineSeparator());
+					for(Integer node:cycle){
+						line.append("	- ");
+						line.append(packageNames.get(node));
+						line.append(System.lineSeparator());
+					}
+					cycleNumber++;
 				}
 
 				writer.write(String.valueOf(line));
