@@ -1,6 +1,6 @@
 # Introducción
 
-Debido a al desarrollo en gran escala de un proyecto de software, es casi imposible evitar que al aumentar en tamaño y complejidad, se generen dependencias innecesarias entre ciertos porciones del proyecto. Esto genera:
+Debido al desarrollo en gran escala de un proyecto de software, es casi imposible evitar que al aumentar en tamaño y complejidad, se generen dependencias innecesarias entre ciertos porciones del proyecto. Esto genera:
 - Acoplamiento innecesario en el proyecto
 - Dificulta la comprensión y el mantenimiento del proyecto
 - Degrada la calidad del diseño
