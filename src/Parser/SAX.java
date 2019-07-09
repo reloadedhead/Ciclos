@@ -1,14 +1,10 @@
 package Parser;
 
-import Algoritmos.Tarjan;
-import Utils.ReportGenerator;
-
 import java.io.File;
 import java.util.*;
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import Algoritmos.*;
+import Utils.*;
 
 /**
  * Clase de SAX. Se encarga de levantar el XML. Por ahrora levanta solo uno, indicado en el path del metodo main.
@@ -18,6 +14,8 @@ public class SAX {
      * Contador de numero total de paquetes, usado para crear matriz y como fila actual
      */
     static int numberOfPackages=0;
+
+    private static Integer[] idNames;
 
     /**
      * Matriz que contendra true si el paquete fila depende del paquete columna
@@ -44,6 +42,12 @@ public class SAX {
      */
     private static void matrixInit(){
         dependenciesMatrix = new boolean[numberOfPackages][numberOfPackages];
+        idNames = new Integer[numberOfPackages];
+    }
+
+    private static void arrayCarga(){
+        for(int i = 0; i < idNames.length ; i++)
+            idNames[i] = i;
     }
 
     /**
@@ -126,50 +130,58 @@ public class SAX {
      */
     public static void main(String[] args) {
         try {
-           // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            JFileChooser j = new JFileChooser("./");
-            j.setFileFilter(new FileFilter() {
-                @Override
-                public boolean accept(File f) {
-                    return f.getName().endsWith(".odem");
+            // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//            JFileChooser j = new JFileChooser("./");
+//            j.setFileFilter(new FileFilter() {
+//                @Override
+//                public boolean accept(File f) {
+//                    return f.getName().endsWith(".odem");
+//                }
+//
+//                @Override
+//                public String getDescription() {
+//                    return "*.odem";
+//                }
+//            });
+//            j.setDialogTitle("Seleccione archivo .odem");
+//            j.showOpenDialog(null);
+
+//            if (j.getSelectedFile()!=null)
+//            {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+            javax.xml.parsers.SAXParser saxParser = factory.newSAXParser();
+            File inputFile = new File("."+File.separator+"dependencias"+File.separator+"apache-camel-1.6.0.odem"); //j.getSelectedFile();//
+            UserHandler userhandler = new UserHandler();
+
+            saxParser.parse(inputFile, userhandler);
+
+            matrixInit();
+            arrayCarga();
+            UserHandler.packagesAreLoaded = true;
+            numberOfPackages = 0;
+            saxParser.parse(inputFile, userhandler);
+
+            Johnson j = new Johnson(dependenciesMatrix, idNames);
+
+            List<List<Object>> result = j.getElementaryCycles();
+
+            for (int i = 0; i < result.size(); i++){
+                if (result.get(i).size() < 3){
+                    result.remove(i);
                 }
-
-                @Override
-                public String getDescription() {
-                    return "*.odem";
-                }
-            });
-            j.setDialogTitle("Seleccione archivo .odem");
-            j.showOpenDialog(null);
-
-            if (j.getSelectedFile()!=null)
-            {
-                SAXParserFactory factory = SAXParserFactory.newInstance();
-                factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-                javax.xml.parsers.SAXParser saxParser = factory.newSAXParser();
-                File inputFile = j.getSelectedFile();// = new File("."+File.separator+"dependencias"+File.separator+"hibernate-core-4.2.0.Final.odem");
-                UserHandler userhandler = new UserHandler();
-
-                saxParser.parse(inputFile, userhandler);
-
-                matrixInit();
-                UserHandler.packagesAreLoaded = true;
-                numberOfPackages = 0;
-                saxParser.parse(inputFile, userhandler);
-
-                Tarjan t = new Tarjan(dependenciesMatrix);
-
-                for (int i = 0; i<numberOfPackages;i++)
-                    dependenciesMatrix[i][i] = false;
-
-
-                ArrayList<ArrayList<Integer>> cycleList = getCyclesFromTarjan(t);
-                cycleList.removeIf(cycle -> (cycle.size() < 3));
-
-                ReportGenerator reporter = new ReportGenerator("."+File.separator+inputFile.getName()+"- Lista de ciclos.txt");
-                reporter.generateReport(cycleList, inputFile.getName(), InvReferencia);
-
             }
+
+
+            System.out.println(result.size());
+
+            for (int i = 0; i<numberOfPackages;i++)
+                dependenciesMatrix[i][i] = false;
+
+            ReportGenerator reporter = new ReportGenerator("."+File.separator+inputFile.getName()+"- Lista de ciclos.txt");
+            reporter.generateReport(result, inputFile.getName(), InvReferencia);
+
+            //  }
         } catch (Exception e) {
             e.printStackTrace();
         }

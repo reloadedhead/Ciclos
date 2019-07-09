@@ -5,15 +5,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ReportGenerator {
 	private File reportFile;
-
 	public ReportGenerator(String path) {
 		reportFile = new File(path);
 	}
 
-	public void generateReport(ArrayList<ArrayList<Integer>> cycleList, String sysName, HashMap<Integer, String> packageNames){
+	public void generateReport(List<List<Object>> cycleList, String sysName, HashMap<Integer, String> packageNames){
 		int cycleNumber = 1;
 		try{
 			if (reportFile.createNewFile()){
@@ -21,19 +21,19 @@ public class ReportGenerator {
 				StringBuilder line = new StringBuilder();
 				line.append(new StringBuilder("Ciclos de dependencias para el sistema ").append(sysName));
 				line.append(":");
-				for (ArrayList<Integer> cycle:cycleList) {
+				for (int i = 0; i < cycleList.size(); i++){
 					line.append(System.lineSeparator());
 					line.append("- Ciclo ");
-					line.append(cycleNumber);
+					line.append(i);
 					line.append(System.lineSeparator());
-					for(Integer node:cycle){
+					for (int j = 0; j < cycleList.get(i).size(); j++){
 						line.append("	- ");
-						line.append(packageNames.get(node));
+						line.append(packageNames.get(cycleList.get(i).get(j)));
 						line.append(System.lineSeparator());
+						writer.write(String.valueOf(line));
+						line = new StringBuilder();
 					}
-					cycleNumber++;
 				}
-
 				writer.write(String.valueOf(line));
 				writer.close();
 			}
