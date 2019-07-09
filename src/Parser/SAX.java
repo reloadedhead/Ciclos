@@ -125,7 +125,7 @@ public class SAX {
             fc.setFileFilter(new FileFilter() {
                 @Override
                 public boolean accept(File f) {
-                    return f.getName().endsWith(".odem");
+                    return (f.getName().endsWith(".odem"))|| f.isDirectory(); //Para poder navegar las carpetas hasta encontrar los .odem tiene que también aceptar carpetas
                 }
                 @Override
                 public String getDescription() {
