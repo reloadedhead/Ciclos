@@ -2,6 +2,8 @@ package Parser;
 
 import java.io.File;
 import java.util.*;
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import javax.xml.parsers.SAXParserFactory;
 import Algoritmos.*;
 import Utils.*;
@@ -90,20 +92,8 @@ public class SAX {
      * @param t objeto Tarjan
      * @return Lista de ciclos, cada ciclo es una lista de paquetes.
      */
-    private static ArrayList<ArrayList<Integer>> getCyclesFromTarjan(Tarjan t){
-        int[] stronglyConnectedComponents = t.getStronglyConnectedComponents();
-        ArrayList<ArrayList<Integer>> dependencyCycles = new ArrayList<>(t.countStronglyConnectedComponents());
-        setNullArrayList(dependencyCycles, t.countStronglyConnectedComponents());
-        for (int i = 0; i<stronglyConnectedComponents.length; i++) {
-            if (dependencyCycles.get(stronglyConnectedComponents[i]) == null){
-                dependencyCycles.set(stronglyConnectedComponents[i], new ArrayList<>());
-                dependencyCycles.get(stronglyConnectedComponents[i]).add(i);
-            } else {
-                dependencyCycles.get(stronglyConnectedComponents[i]).add(i);
-            }
-        }
-        return dependencyCycles;
-    }
+
+
 
     /**
      * Este método devuelve si dos nodos pertenecen a un mismo ciclo.
@@ -130,24 +120,24 @@ public class SAX {
      */
     public static void main(String[] args) {
         try {
-            // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//            JFileChooser j = new JFileChooser("./");
-//            j.setFileFilter(new FileFilter() {
-//                @Override
-//                public boolean accept(File f) {
-//                    return f.getName().endsWith(".odem");
-//                }
-//
-//                @Override
-//                public String getDescription() {
-//                    return "*.odem";
-//                }
-//            });
-//            j.setDialogTitle("Seleccione archivo .odem");
-//            j.showOpenDialog(null);
+            //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //Se rompe en OSX
+            JFileChooser fc = new JFileChooser("./dependencias");
+            fc.setFileFilter(new FileFilter() {
+                @Override
+                public boolean accept(File f) {
+                    return f.getName().endsWith(".odem");
+                }
+                @Override
+                public String getDescription() {
+                    return "*.odem";
+                }
+            });
+            fc.setDialogTitle("Seleccione archivo .odem");
+            fc.showOpenDialog(null);
 
-//            if (j.getSelectedFile()!=null)
-//            {
+            if (fc.getSelectedFile()!=null)
+
+            {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             javax.xml.parsers.SAXParser saxParser = factory.newSAXParser();
@@ -167,9 +157,7 @@ public class SAX {
             List<List<Object>> result = j.getElementaryCycles();
 
             for (int i = 0; i < result.size(); i++){
-                if (result.get(i).size() < 3){
-                    result.remove(i);
-                }
+                if (result.get(i).size() < 3) result.remove(i);
             }
 
 
@@ -181,7 +169,7 @@ public class SAX {
             ReportGenerator reporter = new ReportGenerator("."+File.separator+inputFile.getName()+"- Lista de ciclos.txt");
             reporter.generateReport(result, inputFile.getName(), InvReferencia);
 
-            //  }
+              }
         } catch (Exception e) {
             e.printStackTrace();
         }
