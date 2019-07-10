@@ -9,8 +9,13 @@ import java.util.List;
 
 public class ReportGenerator {
 	private File reportFile;
+	private String reportName;
+	private String reportPath;
+
 	public ReportGenerator(String path) {
 		reportFile = new File(path);
+		reportName=reportFile.getName();
+		reportPath=reportFile.getAbsolutePath();
 	}
 
 	public void generateReport(List<List<Object>> cycleList, String sysName, HashMap<Integer, String> packageNames){
@@ -40,5 +45,13 @@ public class ReportGenerator {
 		} catch (IOException e){
 			System.out.println("Error abriendo el archivo.");
 		}
+	}
+
+	public String getReportName() {
+		return reportName;
+	}
+
+	public String getReportPath() {
+		return reportPath;
 	}
 }

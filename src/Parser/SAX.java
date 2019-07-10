@@ -168,7 +168,7 @@ public class SAX {
 
             ReportGenerator reporter = new ReportGenerator("."+File.separator+inputFile.getName()+"- Lista de ciclos.txt");
             reporter.generateReport(result, inputFile.getName(), InvReferencia);
-
+            System.out.println("Creado archivo de salida \""+reporter.getReportName()+"\" en "+reporter.getReportPath());
               }
         } catch (Exception e) {
             e.printStackTrace();
