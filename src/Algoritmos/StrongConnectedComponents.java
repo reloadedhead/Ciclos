@@ -217,7 +217,7 @@ public class StrongConnectedComponents {
             } while (this.number[next] > this.number[root]);
 
             // simple scc's with just one node will not be added
-            if (scc.size() > 1) {
+            if (scc.size() > 3) {
                 this.currentSCCs.add(scc);
             }
         }

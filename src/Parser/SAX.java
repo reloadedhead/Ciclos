@@ -136,12 +136,11 @@ public class SAX {
             fc.showOpenDialog(null);
 
             if (fc.getSelectedFile()!=null)
-
             {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             javax.xml.parsers.SAXParser saxParser = factory.newSAXParser();
-            File inputFile = new File("."+File.separator+"dependencias"+File.separator+"apache-camel-1.6.0.odem"); //j.getSelectedFile();//
+            File inputFile = fc.getSelectedFile();//
             UserHandler userhandler = new UserHandler();
 
             saxParser.parse(inputFile, userhandler);
@@ -161,7 +160,8 @@ public class SAX {
             }
 
 
-            System.out.println(result.size());
+            System.out.println("Ciclos encontrados: "+result.size());
+            System.out.println("Generando Lista de Ciclos...");
 
             for (int i = 0; i<numberOfPackages;i++)
                 dependenciesMatrix[i][i] = false;

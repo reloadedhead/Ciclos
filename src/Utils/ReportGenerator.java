@@ -26,6 +26,11 @@ public class ReportGenerator {
 				StringBuilder line = new StringBuilder();
 				line.append(new StringBuilder("Ciclos de dependencias para el sistema ").append(sysName));
 				line.append(":");
+				line.append(System.lineSeparator());
+				line.append("Cantidad total de ciclos encontrados: "+cycleList.size());
+				line.append(System.lineSeparator());
+				writer.write(String.valueOf(line));
+				line = new StringBuilder();
 				for (int i = 0; i < cycleList.size(); i++){
 					line.append(System.lineSeparator());
 					line.append("- Ciclo ");
@@ -40,6 +45,7 @@ public class ReportGenerator {
 					}
 				}
 				writer.write(String.valueOf(line));
+				line = new StringBuilder();
 				writer.close();
 			}
 		} catch (IOException e){
